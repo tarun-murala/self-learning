@@ -7,5 +7,6 @@ router.get('/', function (req, res) {
 });
 
 require('./page')(router);
+require('./pagecount')(router);
 
 module.exports = router;
