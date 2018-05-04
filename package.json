@@ -1,7 +1,7 @@
 {
-  "name": "nodejs-ex",
-  "version": "0.0.1",
-  "description": "Node.js sample app for OpenShift 3",
+  "name": "tarun-murala-self-learning",
+  "version": "1.0.0",
+  "description": "Tarun Murala - Self Learnings",
   "main": "server.js",
   "dependencies": {
     "chai": "^3.5.0",
@@ -11,7 +11,10 @@
     "mocha": "^2.4.5",
     "mongodb": "^2.1.16",
     "morgan": "^1.7.0",
-    "object-assign":"4.1.0"
+    "object-assign":"4.1.0",
+    "body-parser" : "~1.4.2",
+    "method-override" : "~2.0.2",
+    "mongoose" : "~3.8.0"
   },
   "engine": {
     "node": "*",
@@ -23,12 +26,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://github.com/openshift/nodejs-ex.git"
+    "url": "https://github.com/tarun-murala/self-learning"
   },
-  "author": "Steve Speicher <sspeiche@gmail.com>",
-  "license": "CC-BY-1.0",
-  "bugs": {
-    "url": "http://github.com/openshift/nodejs-ex/issues"
-  },
-  "homepage": "http://github.com/openshift/nodejs-ex"
+  "author": "Tarun Murala (kumartarun422/tarun.murala)",
+  "license": "ISC",
+  "homepage": "http://www.tarunmurala.com"
 }
