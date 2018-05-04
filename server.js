@@ -14,8 +14,8 @@ app.use(bodyParser.json());
 app.engine('html', require('ejs').renderFile);
 app.use(morgan('combined'))
 
-var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 3030,
-    ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1',
+var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
+    ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
     mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
     mongoURLLabel = "";
 
@@ -37,9 +37,6 @@ if (mongoURL == null && process.env.DATABASE_SERVICE_NAME) {
     mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
   }
 }
-
-if(mongoURL == null)
-  mongoURL = 'mongodb://localhost:27017/self-learning-dev';
 
 var db = null,
     dbDetails = new Object();
@@ -64,6 +61,9 @@ var initDb = function(callback) {
 
 var routes = require("./app/routes");
 app.use('/', routes);
+initDb(function (error) {
+  console.log('Unable to connect to MongoDB at: %s', mongoURL);
+});
 
 app.listen(port, ip);
 console.log('Server running on http://%s:%s', ip, port);
