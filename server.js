@@ -59,11 +59,49 @@ var initDb = function(callback) {
   }); 
 };
 
-var routes = require("./app/routes");
-app.use('/', routes);
-initDb(function (error) {
-  console.log('Unable to connect to MongoDB at: %s', mongoURL);
+app.get('/', function (req, res) {
+  if (!db) {
+    initDb(function(err){});
+  }
+  if (db) {
+    var col = db.collection('counts');
+    col.insert({ip: req.ip, date: Date.now()});
+    col.count(function(err, count){
+      if (err) {
+        console.log('Error running count. Message:\n'+err);
+      }
+      res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
+    });
+  } else {
+    res.render('index.html', { pageCountMessage : null});
+  }
 });
+
+app.get('/pagecount', function (req, res) {
+  if (!db) {
+    initDb(function(err){});
+  }
+  if (db) {
+    db.collection('counts').count(function(err, count ){
+      res.send('{ pageCount: ' + count + '}');
+    });
+  } else {
+    res.send('{ pageCount: -1 }');
+  }
+});
+
+// error handling
+app.use(function(err, req, res, next){
+  console.error(err.stack);
+  res.status(500).send('Something bad happened!');
+});
+
+initDb(function(err){
+  console.log('Error connecting to Mongo. Message:\n'+err);
+});
+
+// var routes = require("./app/routes");
+// app.use('/', routes);
 
 app.listen(port, ip);
 console.log('Server running on http://%s:%s', ip, port);
