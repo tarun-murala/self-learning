@@ -47,6 +47,8 @@ var initDb = function(callback) {
   var mongodb = require('mongodb');
   if (mongodb == null) return;
 
+  console.log('IP -> ' + ip + " | port -> " + port);
+  console.log('mongoURL -> ' + mongoURL );
   mongodb.connect(mongoURL, function(err, conn) {
     if (err) {
       callback(err);
@@ -76,10 +78,10 @@ app.get('/', function (req, res) {
       if (err) {
         console.log('Error running count. Message:\n'+err);
       }
-      res.render('./views/index.html', { pageCountMessage : count, dbInfo: dbDetails });
+      res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
     });
   } else {
-    res.render('./views/index.html', { pageCountMessage : null});
+    res.render('index.html', { pageCountMessage : null});
   }
 });
 
